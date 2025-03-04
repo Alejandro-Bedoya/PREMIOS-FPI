@@ -23,10 +23,17 @@ const navTogglers = document.querySelectorAll("[data-nav-toggler]");
 const overlay = document.querySelector("[data-overlay]");
 
 const toggleNavbar = function () {
-    navbar.classList.toggle("active");
-    overlay.classList.toggle("active");
-    document.body.classList.toggle("nav-active");
-}
+  navbar.classList.toggle("active");
+  overlay.classList.toggle("active");
+  document.body.classList.toggle("nav-active");
+
+  // Evita el desplazamiento cuando el menú está abierto
+  if (navbar.classList.contains("active")) {
+      document.body.style.overflow = "hidden";
+  } else {
+      document.body.style.overflow = "";
+  }
+};
 
 // Agregar evento de clic a todos los botones que activan el menú
 navTogglers.forEach((btn) => {

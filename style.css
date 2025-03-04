@@ -291,7 +291,9 @@ h2,
 
 .nav-open-btn {
   font-size: 3.5rem;
-  color: var(--white);
+  color: black;
+  z-index: 1100; /* Asegura que esté por encima de otros elementos */
+  position: relative; /* Evita que se vea cortado */
 }
 
 .header.active .nav-open-btn { color: var(--charcoal); }
@@ -317,7 +319,8 @@ h2,
 
 .navbar.active {
   visibility: visible;
-  transform: translateX(100%);
+  transform: translateX(0); /* En lugar de 100% */
+  left: 0; /* Asegura que el menú se desplace correctamente */
 }
 
 .navbar-top {
@@ -355,19 +358,18 @@ h2,
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.8);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
+  z-index: 999; /* Asegura que esté por encima del contenido */
 }
 
 .overlay.active {
   opacity: 1;
   pointer-events: all;
 }
-
 
 /*-----------------------------------*\
   #HERO

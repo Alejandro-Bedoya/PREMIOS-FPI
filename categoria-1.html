@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATEGORIA 1 | PREMIOS FPI 202</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="Logo Sena.png" type="image/svg+xml">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles-votaciones.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Images -->
+    <link rel="preload" as="image" href="hero-bg.jpg">
+    <link rel="preload" as="image" href="hero-slide-1.jpg">
+    <link rel="preload" as="image" href="hero-slide-2.jpg">
+    <link rel="preload" as="image" href="hero-slide-3.jpg">
+    
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" data-header>
+        <div class="container">
+
+            <a href="index.html" class="logo">
+                <img src="Logo Sena.png" width="74" height="24" alt="Premios FPI 2025" class="logo-light">
+
+                <img src="Logo Sena.png" width="74" height="24" alt="Premios FPI 2025" class="logo-dark">
+            </a>
+
+            <nav class="navbar" data-navbar>
+                <div class="navbar-top">
+                    <a href="index.html" class="logo">
+                        <img src="Logo Sena.png" width="74" height="24" alt="Premios FPI 2025">
+                    </a>
+
+                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+
+                <ul class="navbar-list">
+            
+                    <li>
+                        <a href="index.html" class="navbar-link">Inicio</a>
+                    </li>
+    
+                    <!--<li>
+                        <a href="#" class="navbar-link">Reglas</a>
+                    </li>-->
+    
+                </ul>
+
+                <!--<div class="wrapper">
+                    <a href="mailto:#" class="contact-link">Gmail</a>
+
+                    <a href="tel:#" class="contact-link">Telefono</a>
+
+                </div>
+
+                <ul class="social-list">
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-twitter"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+
+                </ul>-->
+
+            </nav>
+
+            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            </button>
+
+            <div class="overlay" data-nav-toggler data-overlay></div>
+
+        </div>
+    </header>
+    
+    <main>
+        <!-- PROJECTS -->
+        <section class="section project" aria-labelledby="project-label">
+            <div class="container">
+                <div class="timer-container">
+                    <p id="timer">Tiempo restante: 60s</p>
+                </div>
+                <p class="section-subtitle" id="project-label">Calidad Humana</p>
+                <h2 class="h2 section-title">
+                    Reconoce al instructor que, además de su conocimiento técnico, 
+                    demostró empatía, respeto y compromiso con el bienestar de los 
+                    aprendices.
+                </h2>
+        
+                <div class="grid-container">
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="SENA VERDE.png" alt="Sandra Grajales" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Sandra Grajales</h3>
+                            <p class="card-text">Descripción de la instructora.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Sandra-Grajales"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Sandra-Grajales">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Sandra-Grajales')">Votar</button>
+                        </div>
+                    </div>
+        
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="SENA VERDE.png" alt="Liliana Mejia" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Liliana Mejia</h3>
+                            <p class="card-text">Descripción del instructor.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Liliana-Mejia"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Liliana-Mejia">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Liliana-Mejia')">Votar</button>
+                        </div>
+                    </div>
+        
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="SENA VERDE.png" alt="Laura Gómez" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Martha Mesa</h3>
+                            <p class="card-text">Descripción de la instructora.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Martha-Mesa"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Laura-Gómez">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Martha-Mesa')">Votar</button>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="SENA VERDE.png" alt="Laura Gómez" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Mariana Restrepo</h3>
+                            <p class="card-text">Descripción de la instructora.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Mariana-Restrepo"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Laura-Gómez">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Mariana-Restrepo')">Votar</button>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="category-container">
+                    <a href="categoria-2.html" class="category-btn">
+                        <ion-icon name="arrow-forward-circle-outline"></ion-icon> Siguiente Categoría
+                    </a>
+                </div>
+                
+            </div>
+        </section>
+        
+        <div id="vote-message" class="hidden">Gracias por votar</div>        
+        
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container grid-list">
+
+            <div class="footer-brand">
+
+                <a href="index.html" class="logo">
+                    <img src="Logo Sena.png" width="74" height="24" alt="SENA">
+                </a>
+
+                <p class="footer-text">
+                    &copy; PREMIOS FPI 2025. <br> Todos los derechos reservados.
+                </p>
+
+                <!--<ul class="social-list">
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+
+                </ul>-->
+
+            </div>
+
+            <ul class="footer-list">
+
+                <li>
+                    <p class="h4 footer-list-title">Dirección</p>
+                </li>
+
+                <li>
+                    <address class="footer-text">
+                        Cra. 8 27-79, Pereira, Risaralda | Centro de Comercio y Servicios
+                    </address>
+                </li>
+
+                <!--<li>
+                    <a href="mailto:#" class="footer-link">Gmail</a>
+                </li>
+
+                <li>
+                    <a href="tel:#" class="footer-link">Telefono</a>
+                </li>-->
+
+            </ul>
+
+            <ul class="footer-list">
+
+                <!--<li>
+                    <p class="h4 footer-list-text">Lear More</p>
+                </li>-->
+
+                <li>
+                    <a href="categoria-1.html" class="footer-link">Votaciones</a>
+                </li>
+
+                <!--<li>
+                    <a href="#" class="footer-link">Reglas</a>
+                </li>-->
+
+            </ul>
+
+            <div class="footer-list">
+
+                <p class="h4 footer-list-title">Premios Realizado por:</p>
+
+                <p class="footer-text">Aprendices de Tecnologos en Gestión Administrativa</p>
+
+                <!--<form action="" class="input-wrapper">
+                    <input type="email" name="email_address" placeholder="Email Address" required class="input-field">
+
+                    <button type="submit" class="submit-btn">Premios FPI</button>
+                </form>-->
+
+            </div>
+
+            <ul class="footer-list">
+
+                <li>
+                    <p class="h4 footer-list-title">Página realizada por:</p>
+                </li>
+
+                <li>
+                    <address class="footer-text">
+                        Alejandro Bedoya
+                    </address>
+                </li>
+
+                <!--<li>
+                    <a href="mailto:#" class="footer-link">Gmail</a>
+                </li>
+
+                <li>
+                    <a href="tel:#" class="footer-link">Telefono</a>
+                </li>-->
+
+            </ul>
+
+        </div>
+    </footer>
+
+
+    <!-- JS -->
+    <script src="votaciones.js"></script>
+    <script src="index.js"></script>
+
+    <!-- Ionicon -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- FireBase -->
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js"></script>
+
+
+</body>
+</html>
