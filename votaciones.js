@@ -38,8 +38,9 @@ overlay.addEventListener("click", toggleNavbar);
 
 // VOTACIONES TIEMPO REAL
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAavOPGteAaKSdeARDKKH1wDqksQExCczI",
@@ -52,10 +53,56 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
+const instructores = [
+    "Sandra-Grajales", "Liliana-Mejia", "Martha-Mejia", "Mariana-Restrepo",
+    "Luz-Marina-Gonzalez", "Juan-Guillermo-Mosquera", "Marta-Islena-Rengifo",
+    "Mauricio-Torres", "Oriana-Buitrago", "Angela-Morales", "Miguel-Seclen",
+    "Sandra-Milena-Sarria", "Margarita-Vallejo", "Carlos-Carvajal",
+    "Luis-Fernando-Ibañez", "Ana-Maria-Castro", "Juan-Manuel-Bustamante",
+    "Claudia-Gil", "Jaime-Ramiro-Saavedra", "Lina-Moreno", "José-Dirley",
+    "Isleny", "Gonzalo-Mosquera", "Daniel-Teatro"
+];
+
+// 🔹 Función para votar
+window.vote = async function (instructorId) {
+    if (timeLeft <= 0) return;
+
+    const docRef = doc(db, "votos", instructorId);
+    await updateDoc(docRef, { votos: increment(1) });
+
+    const message = document.getElementById("vote-message");
+    message.style.display = "block";
+    setTimeout(() => message.style.display = "none", 2000);
+};
+
+// 🔹 Escuchar cambios en Firebase en tiempo real y actualizar en la página
+function escucharVotos() {
+    instructores.forEach(instructor => {
+        const docRef = doc(db, "votos", instructor);
+        
+        onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const votos = docSnap.data().votos;
+                const voteCountElement = document.getElementById(`votes-${instructor}`);
+                const progressBarElement = document.getElementById(`progress-${instructor}`);
+                
+                if (voteCountElement) {
+                    voteCountElement.textContent = `Votos: ${votos}`;
+                }
+                if (progressBarElement) {
+                    progressBarElement.style.width = `${votos * 5}px`; // Ajusta según la escala que quieras
+                }
+            }
+        });
+    });
+}
+
+// 🔹 Temporizador de votación
+let timeLeft = 60;
 document.addEventListener("DOMContentLoaded", () => {
-    let timeLeft = 60;
     const timerElement = document.getElementById("timer");
 
     const countdown = setInterval(() => {
@@ -68,25 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".vote-btn").forEach(btn => btn.disabled = true);
         }
     }, 1000);
-
-    window.vote = async function (instructorId) {
-        if (timeLeft <= 0) return;
-
-        const docRef = doc(db, "votos", instructorId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            await updateDoc(docRef, { votos: increment(1) });
-        } else {
-            await setDoc(docRef, { votos: 1 });
-        }
-
-        const message = document.getElementById("vote-message");
-        message.style.display = "block";
-        setTimeout(() => message.style.display = "none", 2000);
-    };
-
-    window.cambiarCategoria = function () {
-        alert("Cambiando de categoría...");
-    };
+    
+    escucharVotos();   // Escuchar actualizaciones en tiempo real
 });
+
+// 🔹 Función para cambiar de categoría
+window.cambiarCategoria = function () {
+    alert("Cambiando de categoría...");
+};
