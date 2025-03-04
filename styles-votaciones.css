@@ -476,9 +476,20 @@ h2,
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .navbar-top .logo {
     display: block;
+  }
+  .grid-container {
+    display: flex;
+    flex-direction: column; /* Acomoda las tarjetas en columna */
+    align-items: center; /* Centra las tarjetas */
+    gap: 20px; /* Espaciado entre tarjetas */
+  }
+
+  .project-card {
+    width: 90%; /* Ajusta el ancho para que no ocupe toda la pantalla */
+    max-width: 400px; /* Máximo tamaño para que se vea bien en móviles */
   }
 }
 
