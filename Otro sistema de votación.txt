@@ -1,0 +1,265 @@
+HTML: 
+<section class="voting-section">
+            <div class="section-header">
+                <h2>Votación de Instructores</h2>
+                <p>Elige a tu instructor favorito y apoya su dedicación.</p>
+            </div>
+    
+            <div class="container swiper">
+                <div class="slider-wrapper">
+                    <div class="card-list swiper-wrapper">
+                        <div class="card-item swiper-slide" data-instructor="Sandra Grajales 1">
+                            <img src="instructor-sena.jpg" alt="User Img" class="user-img">
+                            <h2 class="user-name">Sandra Grajales 1</h2>
+                            <p class="user-profession">Descripción</p>
+                            <div class="vote-progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <button class="message-button vote-button">Votar</button>
+                        </div>
+    
+                        <div class="card-item swiper-slide" data-instructor="Sandra Grajales 2">
+                            <img src="instructor-sena.jpg" alt="User Img" class="user-img">
+                            <h2 class="user-name">Sandra Grajales 2</h2>
+                            <p class="user-profession">Descripción</p>
+                            <div class="vote-progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <button class="message-button vote-button">Votar</button>
+                        </div>
+    
+                        <div class="card-item swiper-slide" data-instructor="Sandra Grajales 3">
+                            <img src="instructor-sena.jpg" alt="User Img" class="user-img">
+                            <h2 class="user-name">Sandra Grajales 3</h2>
+                            <p class="user-profession">Descripción</p>
+                            <div class="vote-progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <button class="message-button vote-button">Votar</button>
+                        </div>
+                    </div>
+    
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-slide-button swiper-button-prev"></div>
+                    <div class="swiper-slide-button swiper-button-next"></div>
+                </div>
+            </div>
+    
+            <div class="voting-controls">
+                <div class="timer">Tiempo restante: <span id="countdown">1:00</span></div>
+                <button id="change-category">Cambiar Categoría</button>
+            </div>
+        </section>
+
+<!-- Slider -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+CSS: 
+.voting-section {
+  padding: 50px 20px;
+  margin: 50px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.container.swiper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.slider-wrapper {
+  overflow: hidden;
+  margin: 0 70px 55px;
+}
+
+.card-list .card-item {
+  color: black;
+  user-select: none;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  backdrop-filter: blur(30px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative; /* Para la barra de progreso */
+}
+
+.card-list .card-item .user-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 40px;
+  border: 3px solid #fff;
+  padding: 4px;
+}
+
+.card-list .card-item .user-profession {
+  font-size: 2rem;
+  color: black;
+  font-weight: 500;
+  margin: 14px 0 40px;
+}
+
+.card-list .card-item .message-button {
+  font-size: 2rem;
+  padding: 10px 35px;
+  color: #030728;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--violet-blue-crayola);
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
+
+.card-list .card-item .message-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--violet-blue-crayola);
+  color: black;
+}
+
+.slider-wrapper .swipper-pagination-bullet {
+  background: red;
+  height: 15px;
+  width: 15px;
+}
+
+.slider-wrapper .swiper-slide-button {
+  color: var(--violet-blue-crayola);
+  margin-top: -50px;
+  transition: 0.2 ease;
+}
+
+.slider-wrapper .swiper-slide-button:hover {
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .slider-wrapper {
+      margin: 0 10px 40px;
+  }
+
+  .slider-wrapper .swiper-slide-button {
+      display: none;
+  }
+}
+
+.vote-progress {
+  width: 20px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #eee;
+  border-radius: 8px 0 0 8px;
+  overflow: hidden;
+}
+
+.vote-progress .progress-bar {
+  width: 100%;
+  height: 0%;
+  background-color: green;
+  transition: height 0.5s ease;
+}
+
+.voting-controls {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.timer {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+JS: 
+const swiper = new Swiper('.slider-wrapper', {
+  loop: true,
+  grabCursor: true,
+  spaceBetween: 30,
+  pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      dynamicBullets: true,
+  },
+  navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+  },
+  breakpoints: {
+      0: { slidesPerView: 1 },
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+});
+
+let votingActive = true;
+let timeLeft = 60; // 1 minuto en segundos
+let votes = {};
+
+function updateTimer() {
+    const minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
+
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        votingActive = false;
+        alert('El tiempo de votación ha terminado.');
+        disableVoting();
+    } else {
+        timeLeft--;
+    }
+}
+
+function disableVoting() {
+    const voteButtons = document.querySelectorAll('.vote-button');
+    voteButtons.forEach(button => {
+        button.disabled = true;
+    });
+}
+
+function updateProgressBar(instructor, percentage) {
+    const card = document.querySelector(`.card-item[data-instructor="${instructor}"]`);
+    const progressBar = card.querySelector('.progress-bar');
+    progressBar.style.height = `${percentage}%`;
+}
+
+function handleVote(event) {
+    if (!votingActive) {
+        alert('La votación está cerrada.');
+        return;
+    }
+
+    const card = event.target.closest('.card-item');
+    const instructor = card.dataset.instructor;
+
+    if (!votes[instructor]) {
+        votes[instructor] = 0;
+    }
+    votes[instructor]++;
+
+    const totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
+    const percentage = (votes[instructor] / totalVotes) * 100;
+
+    updateProgressBar(instructor, percentage);
+    alert('¡Gracias por votar!');
+}
+
+const voteButtons = document.querySelectorAll('.vote-button');
+voteButtons.forEach(button => {
+    button.addEventListener('click', handleVote);
+});
+
+const timerInterval = setInterval(updateTimer, 1000);
+
+document.getElementById('change-category').addEventListener('click', () => {
+    alert('Cambiar categoría (funcionalidad no implementada).');
+});

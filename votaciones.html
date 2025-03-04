@@ -97,69 +97,88 @@
         <!-- PROJECTS -->
         <section class="section project" aria-labelledby="project-label">
             <div class="container">
-              
-              <!-- Cronómetro -->
-              <div class="timer-container">
-                <p id="timer">Tiempo restante: 60s</p>
-              </div>
-          
-              <p class="section-subtitle" id="project-label">Calidad Humana</p>
-          
-              <h2 class="h2 section-title">
-                Reconoce al instructor que, además de su conocimiento técnico, 
-                demostró empatía, respeto y compromiso con el bienestar de los 
-                aprendices. Aquel que estuvo siempre dispuesto a escuchar, guiar 
-                y motivar, haciendo que el aprendizaje fuera una experiencia cercana 
-                y enriquecedora.
-              </h2>
-          
-              <ul class="grid-list">
-                <!-- Ejemplo de una tarjeta de instructor -->
-                <li>
-                  <div class="project-card" onclick="vote('Sandra Grajales')">
-                    <figure class="card-banner img-holder">
-                      <img src="instructor-sena.jpg" width="560" height="350" loading="lazy" alt="Sandra Grajales" class="img-cover">
-                    </figure>
-          
-                    <div class="card-content">
-                      <h3 class="h3"><p>Sandra Grajales</p></h3>
-                      <p class="card-text">Una descripción de la instructora.</p>
-          
-                      <ul class="card-meta-list">
-                        <li class="card-meta-item">
-                          <ion-icon name="calendar-outline"></ion-icon>
-                          <time class="meta-text">Fecha</time>
-                        </li>
-                        <li class="card-meta-item">
-                          <ion-icon name="document-text-outline"></ion-icon>
-                          <span class="meta-text">Programa que enseñó</span>
-                        </li>
-                      </ul>
-          
-                      <!-- Barra de progreso -->
-                      <div class="progress-container">
-                        <div class="progress-bar" id="progress-Sandra-Grajales"></div>
-                      </div>
-          
-                      <!-- Contador de votos -->
-                      <p class="vote-count" id="votes-Sandra-Grajales">Votos: 0</p>
+                <div class="timer-container">
+                    <p id="timer">Tiempo restante: 60s</p>
+                </div>
+                <p class="section-subtitle" id="project-label">Calidad Humana</p>
+                <h2 class="h2 section-title">
+                    Reconoce al instructor que, además de su conocimiento técnico, 
+                    demostró empatía, respeto y compromiso con el bienestar de los 
+                    aprendices.
+                </h2>
+        
+                <div class="grid-container">
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="Logo Sena.png" alt="Sandra Grajales" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Sandra Grajales</h3>
+                            <p class="card-text">Descripción de la instructora.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Sandra-Grajales"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Sandra-Grajales">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Sandra-Grajales')">Votar</button>
+                        </div>
                     </div>
-                  </div>
-                </li>
-          
-                <!-- Repetir para otros instructores... -->
-          
-              <!-- Botón de cambio de categoría -->
-              <div class="category-container">
-                <button class="category-btn" id="next-category">➡ Siguiente Categoría</button>
-              </div>
-          
+        
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="Logo Sena.png" alt="Liliana Mejia" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Liliana Mejia</h3>
+                            <p class="card-text">Descripción del instructor.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Carlos-Pérez"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Liliana-Mejia">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Liliana Mejia')">Votar</button>
+                        </div>
+                    </div>
+        
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="Logo Sena.png" alt="Laura Gómez" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Nombre Instructor/a</h3>
+                            <p class="card-text">Descripción de la instructora.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Laura-Gómez"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Laura-Gómez">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Laura-Gómez')">Votar</button>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <figure class="card-banner img-holder">
+                            <img src="Logo Sena.png" alt="Laura Gómez" class="img-cover">
+                        </figure>
+                        <div class="card-content">
+                            <h3 class="h3">Nombre Instructor/a</h3>
+                            <p class="card-text">Descripción de la instructora.</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-Laura-Gómez"></div>
+                            </div>
+                            <p class="vote-count" id="votes-Laura-Gómez">Votos: 0</p>
+                            <button class="vote-btn" onclick="vote('Laura-Gómez')">Votar</button>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="category-container">
+                    <button class="category-btn" onclick="cambiarCategoria()">
+                        <ion-icon name="arrow-forward-circle-outline"></ion-icon> Siguiente Categoría
+                    </button>
+                </div>
             </div>
         </section>
-          
-        <!-- Mensaje emergente de votación -->
-        <div id="vote-message" class="hidden">Gracias por votar</div>
-          
+        
+        <div id="vote-message" class="hidden">Gracias por votar</div>        
+        
     </main>
 
     <!-- FOOTER -->
@@ -278,6 +297,11 @@
     <!-- Ionicon -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- FireBase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
 
 </body>
 </html>
