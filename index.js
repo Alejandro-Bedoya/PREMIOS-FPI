@@ -59,6 +59,29 @@ window.addEventListener("scroll", function () {
 });
 
 
+/**
+ * FIREBASE
+ */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAavOPGteAaKSdeARDKKH1wDqksQExCczI",
+    authDomain: "prueba-premios-fpi.firebaseapp.com",
+    projectId: "prueba-premios-fpi",
+    storageBucket: "prueba-premios-fpi.firebasestorage.app",
+    messagingSenderId: "315210231985",
+    appId: "1:315210231985:web:65554b20824a46cd18b290",
+    measurementId: "G-8LGQSFTDTD"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);  // 🔹 Aquí se inicializa correctamente Firestore
+const analytics = getAnalytics(app);
+
 
 /**
  * SLIDER FUNCIONAL

@@ -1,4 +1,6 @@
-// VOTACIONES TIEMPO REAL
+/**
+ * FIREBASE
+ */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
@@ -14,10 +16,17 @@ const firebaseConfig = {
     measurementId: "G-8LGQSFTDTD"
 };
 
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);  // 🔹 Aquí se inicializa correctamente Firestore
 const analytics = getAnalytics(app);
-const db = getFirestore(app);
 
+
+// ID único del usuario (se almacena en localStorage para evitar votos repetidos)
+const userId = localStorage.getItem("userId") || Math.random().toString(36).substr(2, 9);
+localStorage.setItem("userId", userId);
+
+// 🔹 Lista de instructores
 const instructores = [
     "Sandra-Grajales", "Liliana-Mejia", "Martha-Mejia", "Mariana-Restrepo",
     "Luz-Marina-Gonzalez", "Juan-Guillermo-Mosquera", "Marta-Islena-Rengifo",
@@ -28,19 +37,29 @@ const instructores = [
     "Isleny", "Gonzalo-Mosquera", "Daniel-Teatro"
 ];
 
-// 🔹 Función para votar
+// 🔹 Función para votar (con validación de voto único)
 window.vote = async function (instructorId) {
-    if (timeLeft <= 0) return;
+    if (!instructorId) return;
 
+    const userRef = doc(db, "usuarios", userId); // Documento único del usuario
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+        alert("⚠️ Ya has votado, no puedes votar nuevamente.");
+        return;
+    }
+
+    // Registrar voto en la colección "usuarios" para evitar votos repetidos
+    await setDoc(userRef, { voto: instructorId });
+
+    // Incrementar voto en la colección "votos"
     const docRef = doc(db, "votos", instructorId);
     await updateDoc(docRef, { votos: increment(1) });
 
-    const message = document.getElementById("vote-message");
-    message.style.display = "block";
-    setTimeout(() => message.style.display = "none", 2000);
+    alert("✅ ¡Voto registrado con éxito!");
 };
 
-// 🔹 Escuchar cambios en Firebase en tiempo real y actualizar en la página
+// 🔹 Escuchar cambios en Firebase en tiempo real y actualizar la página
 function escucharVotos() {
     instructores.forEach(instructor => {
         const docRef = doc(db, "votos", instructor);
@@ -57,10 +76,41 @@ function escucharVotos() {
                 if (progressBarElement) {
                     progressBarElement.style.width = `${votos * 5}px`; // Ajusta según la escala que quieras
                 }
+
+                // Actualizar ganador en la UI
+                actualizarGanador();
             }
         });
     });
 }
+
+// 🔹 Función para calcular el ganador en tiempo real
+async function actualizarGanador() {
+    let maxVotos = 0;
+    let ganador = "Nadie aún";
+
+    for (const instructor of instructores) {
+        const docRef = doc(db, "votos", instructor);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+            const votos = docSnap.data().votos;
+            if (votos > maxVotos) {
+                maxVotos = votos;
+                ganador = instructor.replace("-", " "); // Formato bonito
+            }
+        }
+    }
+
+    document.getElementById("ganador").textContent = `Ganador: ${ganador}`;
+}
+
+// 🔹 Iniciar la escucha de votos al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    escucharVotos();
+    actualizarGanador(); // Para mostrar el ganador al refrescar la página
+});
+
 
 // 🔹 Temporizador de votación
 let timeLeft = 60;
