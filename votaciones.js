@@ -39,6 +39,7 @@ const instructores = [
 
 // 🔹 Función para votar (con validación de voto único)
 window.vote = async function (instructorId) {
+    console.log("Iniciando voto para:", instructorId); // Depuración
     if (!instructorId) return;
 
     const userRef = doc(db, "usuarios", userId); // Documento único del usuario
