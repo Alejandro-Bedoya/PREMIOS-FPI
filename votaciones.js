@@ -3,7 +3,7 @@
  */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
 
 const firebaseConfig = {
