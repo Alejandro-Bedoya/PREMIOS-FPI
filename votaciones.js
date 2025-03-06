@@ -50,14 +50,18 @@ window.vote = async function (instructorId) {
         return;
     }
 
-    // Registrar voto en la colección "usuarios" para evitar votos repetidos
-    await setDoc(userRef, { voto: instructorId });
+    console.log("Registrando voto en 'usuarios'..."); // Depuración
+        await setDoc(userRef, { voto: instructorId }); // Registrar voto en "usuarios"
 
-    // Incrementar voto en la colección "votos"
-    const docRef = doc(db, "votos", instructorId);
-    await updateDoc(docRef, { votos: increment(1) });
+    console.log("Incrementando voto en 'votos'..."); // Depuración
+        const docRef = doc(db, "votos", instructorId);
+        await updateDoc(docRef, { votos: increment(1) }); // Incrementar voto en "votos"
 
     alert("✅ ¡Voto registrado con éxito!");
+        catch (error) {
+        console.error("Error al votar:", error); // Depuración
+        alert("❌ Hubo un error al registrar tu voto. Por favor, intenta nuevamente.");
+    }
 };
 
 // 🔹 Escuchar cambios en Firebase en tiempo real y actualizar la página
