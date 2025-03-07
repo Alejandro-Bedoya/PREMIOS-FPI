@@ -44,6 +44,7 @@ window.vote = async function (instructorId) {
     if (!instructorId) return;
 
     try {
+        console.log("El usuario ya ha votado:", userId) // Depuración
         const userRef = doc(db, "usuarios", userId); // Documento único del usuario
         const docSnap = await getDoc(userRef);
 
