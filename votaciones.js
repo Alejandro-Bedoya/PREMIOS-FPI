@@ -42,23 +42,24 @@ window.vote = async function (instructorId) {
     console.log("Iniciando voto para:", instructorId); // Depuración
     if (!instructorId) return;
 
-    const userRef = doc(db, "usuarios", userId); // Documento único del usuario
-    const docSnap = await getDoc(userRef);
+    try {
+        const userRef = doc(db, "usuarios", userId); // Documento único del usuario
+        const docSnap = await getDoc(userRef);
 
-    if (docSnap.exists()) {
-        alert("⚠️ Ya has votado, no puedes votar nuevamente.");
-        return;
-    }
+        if (docSnap.exists()) {
+            alert("⚠️ Ya has votado, no puedes votar nuevamente.");
+            return;
+        }
 
-    console.log("Registrando voto en 'usuarios'..."); // Depuración
+        console.log("Registrando voto en 'usuarios'..."); // Depuración
         await setDoc(userRef, { voto: instructorId }); // Registrar voto en "usuarios"
 
-    console.log("Incrementando voto en 'votos'..."); // Depuración
+        console.log("Incrementando voto en 'votos'..."); // Depuración
         const docRef = doc(db, "votos", instructorId);
         await updateDoc(docRef, { votos: increment(1) }); // Incrementar voto en "votos"
 
-    alert("✅ ¡Voto registrado con éxito!");
-        catch (error) {
+        alert("✅ ¡Voto registrado con éxito!");
+    } catch (error) {
         console.error("Error al votar:", error); // Depuración
         alert("❌ Hubo un error al registrar tu voto. Por favor, intenta nuevamente.");
     }
