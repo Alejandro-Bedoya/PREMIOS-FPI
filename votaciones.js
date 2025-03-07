@@ -61,7 +61,8 @@ window.vote = async function (instructorId) {
         await updateDoc(docRef, { votos: increment(1) }); // Incrementar voto en "votos"
 
         alert("✅ ¡Voto registrado con éxito!");
-    } catch (error) {
+    } 
+    catch (error) {
         console.error("Error al votar:", error); // Depuración
         alert("❌ Hubo un error al registrar tu voto. Por favor, intenta nuevamente.");
     }
