@@ -21,6 +21,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);  // 🔹 Aquí se inicializa correctamente Firestore
 const analytics = getAnalytics(app);
 console.log("Firebase inicializado:", app); // Deberías ver el objeto de Firebase en la consola
+console.log("Firebase inicializado:", db); // Deberías ver el objeto de Firebase en la consola
 
 
 // ID único del usuario (se almacena en localStorage para evitar votos repetidos)
