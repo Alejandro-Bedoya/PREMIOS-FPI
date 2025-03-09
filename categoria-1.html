@@ -16,15 +16,9 @@
     <!-- CSS -->
     <link rel="stylesheet" href="styles-votaciones.css">
     <link rel="stylesheet" href="style.css">
-
-    <!-- Images -->
-    <link rel="preload" as="image" href="hero-bg.jpg">
-    <link rel="preload" as="image" href="hero-slide-1.jpg">
-    <link rel="preload" as="image" href="hero-slide-2.jpg">
-    <link rel="preload" as="image" href="hero-slide-3.jpg">
     
 </head>
-<body>
+<body data-categoria="categoria1">
 
     <!-- Header -->
     <header class="header" data-header>
@@ -119,7 +113,7 @@
                                 <div class="progress-bar" id="progress-Sandra-Grajales"></div>
                             </div>
                             <p class="vote-count" id="votes-Sandra-Grajales">Votos: 0</p>
-                            <button class="vote-btn" onclick="vote('Sandra-Grajales')">Votar</button>
+                            <button class="vote-btn" data-instructor="Sandra-Grajales">Votar</button>
                         </div>
                     </div>
         
@@ -129,18 +123,18 @@
                         </figure>
                         <div class="card-content">
                             <h3 class="h3">Liliana Mejia</h3>
-                            <p class="card-text">Descripción del instructor.</p>
+                            <p class="card-text">Descripción del instructora.</p>
                             <div class="progress-container">
                                 <div class="progress-bar" id="progress-Liliana-Mejia"></div>
                             </div>
                             <p class="vote-count" id="votes-Liliana-Mejia">Votos: 0</p>
-                            <button class="vote-btn" onclick="vote('Liliana-Mejia')">Votar</button>
+                            <button class="vote-btn" data-instructor="Liliana-Mejia">Votar</button>
                         </div>
                     </div>
         
                     <div class="project-card">
                         <figure class="card-banner img-holder">
-                            <img src="SENA VERDE.png" alt="Laura Gómez" class="img-cover">
+                            <img src="SENA VERDE.png" alt="Martha Mesa" class="img-cover">
                         </figure>
                         <div class="card-content">
                             <h3 class="h3">Martha Mesa</h3>
@@ -148,14 +142,14 @@
                             <div class="progress-container">
                                 <div class="progress-bar" id="progress-Martha-Mesa"></div>
                             </div>
-                            <p class="vote-count" id="votes-Laura-Gómez">Votos: 0</p>
-                            <button class="vote-btn" onclick="vote('Martha-Mesa')">Votar</button>
+                            <p class="vote-count" id="votes-Martha-Mesa">Votos: 0</p>
+                            <button class="vote-btn" data-instructor="Martha-Mesa">Votar</button>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <figure class="card-banner img-holder">
-                            <img src="SENA VERDE.png" alt="Laura Gómez" class="img-cover">
+                            <img src="SENA VERDE.png" alt="Mariana Restrepo" class="img-cover">
                         </figure>
                         <div class="card-content">
                             <h3 class="h3">Mariana Restrepo</h3>
@@ -163,8 +157,8 @@
                             <div class="progress-container">
                                 <div class="progress-bar" id="progress-Mariana-Restrepo"></div>
                             </div>
-                            <p class="vote-count" id="votes-Laura-Gómez">Votos: 0</p>
-                            <button class="vote-btn" onclick="vote('Mariana-Restrepo')">Votar</button>
+                            <p class="vote-count" id="votes-Mariana-Restrepo">Votos: 0</p>
+                            <button class="vote-btn" data-instructor="Mariana-Restrepo">Votar</button>
                         </div>
                     </div>
                 </div>
@@ -176,11 +170,10 @@
                 </div>
                 
             </div>
+
+            <!--<h2>Ganador Actual: <span id="ganador">Cargando...</span></h2>-->
+
         </section>
-        
-        <div id="vote-message" class="hidden">Gracias por votar</div>
-        
-        <h2>Ganador Actual: <span id="ganador">Cargando...</span></h2>
         
     </main>
 
@@ -256,9 +249,9 @@
 
             <div class="footer-list">
 
-                <p class="h4 footer-list-title">Premios Realizado por:</p>
+                <p class="h4 footer-list-title">Premios Realizado por</p>
 
-                <p class="footer-text">Aprendices de Tecnologos en Gestión Administrativa</p>
+                <p class="footer-text">Aprendices de Tecnólogos en Gestión Administrativa</p>
 
                 <!--<form action="" class="input-wrapper">
                     <input type="email" name="email_address" placeholder="Email Address" required class="input-field">
@@ -271,7 +264,7 @@
             <ul class="footer-list">
 
                 <li>
-                    <p class="h4 footer-list-title">Página realizada por:</p>
+                    <p class="h4 footer-list-title">Página realizada por</p>
                 </li>
 
                 <li>
@@ -304,8 +297,8 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js"></script>
 
 
 </body>
