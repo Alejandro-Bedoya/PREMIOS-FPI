@@ -750,6 +750,11 @@ h2,
   margin-block-end: 16px;
 }
 
+.footer-list-text {
+  color: var(--white);
+  margin-block-end: 16px;
+}
+
 .footer-link {
   padding-block: 4px;
   transition: var(--transition-1);
