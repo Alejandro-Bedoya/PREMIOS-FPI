@@ -378,6 +378,10 @@ h2,
     width: 90%; /* Ajusta el ancho para que no ocupe toda la pantalla */
     max-width: 400px; /* Máximo tamaño para que se vea bien en móviles */
   }
+
+  .container .section-subtitle {
+    font-size: 2.5rem; /* Títulos más grandes */
+  }
 }
 
 /*-- PROJECTS --*/
