@@ -1,10 +1,5 @@
-/**
- * FIREBASE
- */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+import { getFirestore, doc, updateDoc, increment, onSnapshot, getDocs, collection } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAavOPGteAaKSdeARDKKH1wDqksQExCczI",
@@ -13,114 +8,123 @@ const firebaseConfig = {
     storageBucket: "prueba-premios-fpi.firebasestorage.app",
     messagingSenderId: "315210231985",
     appId: "1:315210231985:web:65554b20824a46cd18b290",
-    measurementId: "G-8LGQSFTDTD"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);  // 🔹 Aquí se inicializa correctamente Firestore
-const analytics = getAnalytics(app);
-console.log("Firebase inicializado:", app); // Deberías ver el objeto de Firebase en la consola
-console.log("Firebase inicializado:", db); // Deberías ver el objeto de Firebase en la consola
+const db = getFirestore(app);
 
+// 🔹 Detectar la categoría actual
+const categoriaActual = document.body.getAttribute("data-categoria");
 
-// ID único del usuario (se almacena en localStorage para evitar votos repetidos)
-const userId = localStorage.getItem("userId") || Math.random().toString(36).substr(2, 9);
-localStorage.setItem("userId", userId);
-
-// 🔹 Lista de instructores
-const instructores = [
-    "Sandra-Grajales", "Liliana-Mejia", "Martha-Mejia", "Mariana-Restrepo",
-    "Luz-Marina-Gonzalez", "Juan-Guillermo-Mosquera", "Marta-Islena-Rengifo",
-    "Mauricio-Torres", "Oriana-Buitrago", "Angela-Morales", "Miguel-Seclen",
-    "Sandra-Milena-Sarria", "Margarita-Vallejo", "Carlos-Carvajal",
-    "Luis-Fernando-Ibañez", "Ana-Maria-Castro", "Juan-Manuel-Bustamante",
-    "Claudia-Gil", "Jaime-Ramiro-Saavedra", "Lina-Moreno", "José-Dirley",
-    "Isleny", "Gonzalo-Mosquera", "Daniel-Teatro"
-];
-
-// 🔹 Función para votar (con validación de voto único)
-window.vote = async function (instructorId) {
-    console.log("Iniciando voto para:", instructorId); // Depuración
-    if (!instructorId) return;
+// 🔹 Función para votar y bloquear los otros botones en la categoría actual
+async function vote(instructorId) {
+    const docRef = doc(db, "votos", instructorId);
 
     try {
-        console.log("El usuario ya ha votado:", userId) // Depuración
-        const userRef = doc(db, "usuarios", userId); // Documento único del usuario
-        const docSnap = await getDoc(userRef);
+        await updateDoc(docRef, { votos: increment(1) });
 
-        if (docSnap.exists()) {
-            alert("⚠️ Ya has votado, no puedes votar nuevamente.");
-            return;
-        }
+        // Guardar en localStorage que el usuario ha votado en esta categoría
+        localStorage.setItem(`yaVoto_${categoriaActual}`, "true");
 
-        console.log("Registrando voto en 'usuarios'..."); // Depuración
-        await setDoc(userRef, { voto: instructorId }); // Registrar voto en "usuarios"
+        // Bloquear todos los botones de la categoría después del voto
+        document.querySelectorAll(".vote-btn").forEach(button => {
+            button.disabled = true;
+            button.style.backgroundColor = "gray";
+            button.style.cursor = "not-allowed";
+        });
 
-        console.log("Incrementando voto en 'votos'..."); // Depuración
-        const docRef = doc(db, "votos", instructorId);
-        await updateDoc(docRef, { votos: increment(1) }); // Incrementar voto en "votos"
-
-        alert("✅ ¡Voto registrado con éxito!");
-    } 
-    catch (error) {
-        console.error("Error al votar:", error); // Depuración
-        alert("❌ Hubo un error al registrar tu voto. Por favor, intenta nuevamente.");
+        alert("¡Voto registrado con éxito! ✅");
+    } catch (error) {
+        console.error("Error al votar:", error);
+        alert("Hubo un error al votar. Intenta de nuevo.");
     }
-};
+}
 
-// 🔹 Escuchar cambios en Firebase en tiempo real y actualizar la página
-function escucharVotos() {
+// 🔹 Función para bloquear botones si el usuario ya votó en esta categoría
+function verificarVoto() {
+    if (localStorage.getItem(`yaVoto_${categoriaActual}`) === "true") {
+        document.querySelectorAll(".vote-btn").forEach(button => {
+            button.disabled = true;
+            button.style.backgroundColor = "gray";
+            button.style.cursor = "not-allowed";
+        });
+    }
+}
+
+// 🔹 Escuchar cambios en Firebase en tiempo real
+async function escucharVotos() {
+    const instructores = {
+        "categoria1": ["Sandra-Grajales", "Liliana-Mejia", "Martha-Mesa", "Mariana-Restrepo"],
+        "categoria2": ["Luz-Marina-Gonzalez", "Juan-Guillermo-Mosquera", "Marta-Islena-Rengifo", "Mauricio-Torres"],
+        "categoria3": ["Oriana-Buitrago", "Angela-Morales", "Miguel-Seclen", "Sandra-Milena-Sarria"],
+        "categoria4": ["Margarita-Vallejo", "Carlos-Carvajal", "Luis-Fernando-Ibañez", "Ana-Maria-Castro"],
+        "categoria5": ["Juan-Manuel-Bustamante", "Claudia-Gil", "Jaime-Ramiro-Saavedra", "Lina-Moreno"],
+        "categoria6": ["José-Dirley", "Isleny", "Gonzalo-Mosquera", "Daniel-Teatro", "Luz-Adriana-Sanz", "Carlos-Andres-Orozco", "Franklin-Zapata-Calle"]
+    }[categoriaActual] || [];
+
+    const snapshot = await getDocs(collection(db, "votos"));
+    let totalVotos = 0;
+
+    snapshot.forEach(doc => {
+        totalVotos += doc.data().votos;
+    });
+
     instructores.forEach(instructor => {
         const docRef = doc(db, "votos", instructor);
-        
+
         onSnapshot(docRef, (docSnap) => {
             if (docSnap.exists()) {
                 const votos = docSnap.data().votos;
-                const voteCountElement = document.getElementById(`votes-${instructor}`);
-                const progressBarElement = document.getElementById(`progress-${instructor}`);
-                
-                if (voteCountElement) {
-                    voteCountElement.textContent = `Votos: ${votos}`;
-                }
-                if (progressBarElement) {
-                    progressBarElement.style.width = `${votos * 5}px`; // Ajusta según la escala que quieras
-                }
+                document.getElementById(`votes-${instructor}`).textContent = `Votos: ${votos}`;
 
-                // Actualizar ganador en la UI
-                actualizarGanador();
+                // Calcular porcentaje y actualizar la barra de progreso
+                const porcentaje = totalVotos > 0 ? (votos / totalVotos) * 100 : 0;
+                document.getElementById(`progress-${instructor}`).style.width = `${porcentaje}%`;
             }
         });
     });
 }
 
-// 🔹 Función para calcular el ganador en tiempo real
-async function actualizarGanador() {
-    let maxVotos = 0;
-    let ganador = "Nadie aún";
-
-    for (const instructor of instructores) {
-        const docRef = doc(db, "votos", instructor);
-        const docSnap = await getDoc(docRef);
-        
-        if (docSnap.exists()) {
-            const votos = docSnap.data().votos;
-            if (votos > maxVotos) {
-                maxVotos = votos;
-                ganador = instructor.replace("-", " "); // Formato bonito
-            }
-        }
-    }
-
-    document.getElementById("ganador").textContent = `Ganador: ${ganador}`;
-}
-
-// 🔹 Iniciar la escucha de votos al cargar la página
+// 🔹 Bloquear votos si ya votó en esta categoría
 document.addEventListener("DOMContentLoaded", () => {
+    verificarVoto();
+
+    document.querySelectorAll(".vote-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const instructorId = button.getAttribute("data-instructor");
+            vote(instructorId);
+        });
+    });
+
     escucharVotos();
-    actualizarGanador(); // Para mostrar el ganador al refrescar la página
 });
 
+// 🔹 Función para actualizar el ganador
+async function actualizarGanador() {
+    const instructores = {
+        "categoria1": ["Sandra-Grajales", "Liliana-Mejia", "Martha-Mesa", "Mariana-Restrepo"],
+        "categoria2": ["Luz-Marina-Gonzalez", "Juan-Guillermo-Mosquera", "Marta-Islena-Rengifo", "Mauricio-Torres"],
+        "categoria3": ["OtroInstructor1", "OtroInstructor2", "OtroInstructor3"]
+    }[categoriaActual] || [];
+
+    let maxVotos = 0;
+    let ganadorActual = "Aún en proceso...";
+
+    const promesas = instructores.map(async (instructor) => {
+        const docRef = doc(db, "votos", instructor);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const votos = docSnap.data().votos || 0;
+            if (votos > maxVotos) {
+                maxVotos = votos;
+                ganadorActual = instructor.replace("-", " ");
+            }
+        }
+    });
+
+    await Promise.all(promesas);
+    document.getElementById("ganador").textContent = ganadorActual;
+}
 
 // 🔹 Temporizador de votación
 let timeLeft = 60;
@@ -135,13 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(countdown);
             timerElement.textContent = "El tiempo de votación ha terminado";
             document.querySelectorAll(".vote-btn").forEach(btn => btn.disabled = true);
+            actualizarGanador();
         }
     }, 1000);
-    
-    escucharVotos();   // Escuchar actualizaciones en tiempo real
 });
-
-// 🔹 Función para cambiar de categoría
-window.cambiarCategoria = function () {
-    alert("Cambiando de categoría...");
-};
